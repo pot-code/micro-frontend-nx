@@ -1,0 +1,6 @@
+/* Your styles goes here. */
+.nav-list {
+  display: flex;
+  gap: 12px;
+  list-style-type: none;
+}
