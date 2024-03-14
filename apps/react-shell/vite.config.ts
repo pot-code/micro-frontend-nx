@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import federation from '@originjs/vite-plugin-federation';
+import pkg from '../../package.json';
 
 export default defineConfig({
   root: __dirname,
@@ -28,7 +29,9 @@ export default defineConfig({
         'vue-remote': 'http://localhost:4201/assets/remoteEntry.js',
         'react-remote': 'http://localhost:4202/assets/remoteEntry.js',
       },
-      shared: ['vue', 'react'],
+      shared: {
+        ...pkg.dependencies,
+      },
     }),
   ],
 
@@ -38,6 +41,7 @@ export default defineConfig({
   // },
 
   build: {
+    emptyOutDir: true,
     target: 'esnext',
     outDir: '../../dist/apps/react-shell',
     reportCompressedSize: true,

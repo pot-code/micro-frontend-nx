@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import federation from '@originjs/vite-plugin-federation';
+import pkg from '../../package.json';
 
 export default defineConfig({
   root: __dirname,
@@ -27,7 +28,9 @@ export default defineConfig({
       exposes: {
         './App': './src/app/App.tsx',
       },
-      shared: ['react'],
+      shared: {
+        ...pkg.dependencies,
+      },
     }),
   ],
 
@@ -37,6 +40,7 @@ export default defineConfig({
   // },
 
   build: {
+    emptyOutDir: true,
     target: 'esnext',
     outDir: '../../dist/apps/react-remote',
     reportCompressedSize: true,

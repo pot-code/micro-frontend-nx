@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import federation from '@originjs/vite-plugin-federation';
+import pkg from '../../package.json';
 
 export default defineConfig({
   root: __dirname,
@@ -27,7 +28,9 @@ export default defineConfig({
       exposes: {
         './App': './src/app/App.vue',
       },
-      shared: ['vue'],
+      shared: {
+        ...pkg.dependencies,
+      },
     }),
   ],
 
@@ -37,6 +40,7 @@ export default defineConfig({
   // },
 
   build: {
+    emptyOutDir: true,
     target: 'esnext',
     outDir: '../../dist/apps/vue-remote',
     reportCompressedSize: true,
